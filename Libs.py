@@ -77,7 +77,22 @@ def rewrite_document(input_text):
     return call_claude_sonet_stream(prompt)
 
 
-def summary_stream(input_text): 
+def summary_stream(input_text):     
+    prompt = f"""Based on the provided context, create summary the lecture
+        \n\nHuman: here is the content
+        <text>""" + str(input_text) + """</text>
+    \n\nAssistant: """
+    return call_claude_sonet_stream(prompt)
+
+def query_document(question, docs): 
+    prompt = """Human: here is the content:
+        <text>""" + str(docs) + """</text>
+        Question: """ + question + """ 
+    \n\nAssistant: """
+
+    return call_claude_sonet_stream(prompt)
+
+def create_questions(input_text): 
     system_prompt = """You are an expert in creating high-quality multiple-choice quesitons and answer pairs 
     based on a given context. Based on the given context (e.g a passage, a paragraph, or a set of information), you should:
     1. Come up with thought-provoking multiple-choice questions that assess the reader's understanding of the context. 
@@ -87,13 +102,13 @@ def summary_stream(input_text):
     The multiple-choice questions and answer pairs should be in a bulleted list: 
         1) Question: 
 
-            A) Option 1
+        A) Option 1
 
-            B) Option 2 
+        B) Option 2 
 
-            C) Option 3 
+        C) Option 3 
 
-         Answer: A) Option 1 
+        Answer: A) Option 1 
 
          
     Continue with additional questions and answer pairs as needed.
@@ -104,12 +119,4 @@ def summary_stream(input_text):
         \n\nHuman: here is the content
         <text>""" + str(input_text) + """</text>
     \n\nAssistant: """
-    return call_claude_sonet_stream(prompt)
-
-def query_document(question, resume): 
-    prompt = """Human: here is the lecture content:
-        <text>""" + str(resume) + """</text>
-        Question: """ + question + """ 
-    \n\nAssistant: """
-
     return call_claude_sonet_stream(prompt)
