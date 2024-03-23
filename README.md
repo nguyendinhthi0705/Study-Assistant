@@ -23,7 +23,7 @@ Setup <a href='https://docs.aws.amazon.com/cli/latest/userguide/getting-started-
 <a href="https://www-cdn.anthropic.com/de8ba9b01c9ab7cbabf5c33b80b7bbc618857627/Model_Card_Claude_3.pdf">Model Card</a>
 
 # Demo
-[![Watch the video](./demo/Chat.mov)](./demo/Chat.mov)
+[![Chat](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/PdX7i0A4a-M.jpg)](https://www.youtube.com/watch?v=PdX7i0A4a-M)
 [![Watch the video](./demo/CreateQuestions.mov)](/demo/CreateQuestions.mov))
 [![Watch the video](./demo/QnA.mov)](./demo/QnA.mov)
 [![Watch the video](./demo/Suggest_Writing.mov)](./demo/Suggest_Writing.mov)
