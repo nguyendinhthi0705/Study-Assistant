@@ -4,36 +4,6 @@ import boto3, json
 from dotenv import load_dotenv
 load_dotenv()
 
-def call_claude_sonet(prompt):
-
-    prompt_config = {
-        "anthropic_version": "bedrock-2023-05-31",
-        "max_tokens": 4096,
-        "messages": [
-            {
-                "role": "user",
-                "content": [
-                    {"type": "text", "text": prompt},
-                ],
-            }
-        ],
-    }
-
-    body = json.dumps(prompt_config)
-
-    modelId = "anthropic.claude-3-sonnet-20240229-v1:0"
-    accept = "application/json"
-    contentType = "application/json"
-
-    bedrock = boto3.client(service_name="bedrock-runtime")  
-    response = bedrock.invoke_model(
-        body=body, modelId=modelId, accept=accept, contentType=contentType
-    )
-    response_body = json.loads(response.get("body").read())
-
-    results = response_body.get("content")[0].get("text")
-    return results
-
 def call_claude_sonet_stream(prompt):
 
     prompt_config = {
@@ -116,6 +86,13 @@ def create_questions(input_text):
     MAKE SURE TO INCLUDE THE FULL CORRECT ANSWER AT THE END, NO EXPLANATION NEEDED:"""
     
     prompt = f"""{system_prompt}. Based on the provided context, create 10 multiple-choice questions and answer pairs
+        \n\nHuman: here is the content
+        <text>""" + str(input_text) + """</text>
+    \n\nAssistant: """
+    return call_claude_sonet_stream(prompt)
+
+def suggest_writing_document(input_text): 
+    prompt = """Your name is good writer. You need to suggest and correct mistake in the essay: 
         \n\nHuman: here is the content
         <text>""" + str(input_text) + """</text>
     \n\nAssistant: """

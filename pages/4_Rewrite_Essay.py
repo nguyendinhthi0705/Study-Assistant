@@ -1,7 +1,7 @@
 import streamlit as st 
 import Libs as glib 
 
-st.set_page_config(page_title="Rewrite a Essay")
+st.set_page_config(page_title="Rewrite an Essay")
 
 
 input_text = st.text_area("Input your whole or apart of your essay") 

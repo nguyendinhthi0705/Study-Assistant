@@ -3,8 +3,9 @@ import Libs as glib
 from PyPDF2 import PdfReader
 import Libs as glib 
 
-st.set_page_config(page_title="Summary a Lecture/Paper")
+st.set_page_config(page_title="Create question for a Lecture/Paper")
 
+st.markdown("Upload your lecture to create multiple choice questions!") 
 uploaded_file = st.file_uploader("Upload Lecture/Paper in PDF")
 docs = []
 
