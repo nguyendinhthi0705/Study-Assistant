@@ -23,8 +23,11 @@ Setup <a href='https://docs.aws.amazon.com/cli/latest/userguide/getting-started-
 <a href="https://www-cdn.anthropic.com/de8ba9b01c9ab7cbabf5c33b80b7bbc618857627/Model_Card_Claude_3.pdf">Model Card</a>
 
 # Demo
-[![Chat](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/PdX7i0A4a-M.jpg)](https://www.youtube.com/watch?v=PdX7i0A4a-M)
-[![Watch the video](./demo/CreateQuestions.mov)](/demo/CreateQuestions.mov))
-[![Watch the video](./demo/QnA.mov)](./demo/QnA.mov)
-[![Watch the video](./demo/Suggest_Writing.mov)](./demo/Suggest_Writing.mov)
-[![Watch the video](./demo/Summary.mov)](./demo/Summary.mov)
+
+[![Chat](http://img.youtube.com/vi/PdX7i0A4a-M/0.jpg)](https://www.youtube.com/watch?v=PdX7i0A4a-M)]
+[![Questions and Anwsers](http://img.youtube.com/vi/ciJfAhyRjTI/0.jpg)](https://www.youtube.com/watch?v=ciJfAhyRjTI)]
+[![Summary](http://img.youtube.com/vi/5JpeWmbHMi0/0.jpg)](https://www.youtube.com/watch?v=5JpeWmbHMi0)]
+[![Create Multi Choice Questions](http://img.youtube.com/vi/AE9gj19a9t0/0.jpg)](https://www.youtube.com/watch?v=AE9gj19a9t0)]
+[![Suggest Better Writing](http://img.youtube.com/vi/7xBR5rtcp30/0.jpg)](https://www.youtube.com/watch?v=7xBR5rtcp30)]
+
+
