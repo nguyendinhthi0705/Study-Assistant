@@ -21,3 +21,10 @@ Setup <a href='https://docs.aws.amazon.com/cli/latest/userguide/getting-started-
 # Learn more about prompt and Claude 3
 <a href="https://docs.anthropic.com/claude/docs/introduction-to-prompt-design" target="_blank">Introduction to prompt design </a>
 <a href="https://www-cdn.anthropic.com/de8ba9b01c9ab7cbabf5c33b80b7bbc618857627/Model_Card_Claude_3.pdf">Model Card</a>
+
+# Demo
+[![Watch the video](./demo/Chat.mov)](./demo/Chat.mov)
+[![Watch the video](./demo/CreateQuestions.mov)](/demo/CreateQuestions.mov))
+[![Watch the video](./demo/QnA.mov)](./demo/QnA.mov)
+[![Watch the video](./demo/Suggest_Writing.mov)](./demo/Suggest_Writing.mov)
+[![Watch the video](./demo/Summary.mov)](./demo/Summary.mov)
