@@ -106,7 +106,7 @@ def suggest_writing_document(input_text):
 
 def search(input_text): 
     retriever = AmazonKnowledgeBasesRetriever(
-        knowledge_base_id="WUWMHISMII",
+        knowledge_base_id="JAHBTIXPHK",
         retrieval_config={"vectorSearchConfiguration": {"numberOfResults": 4}}
     )
     model_kwargs_claude = {"temperature": 0, "top_k": 10, "max_tokens_to_sample": 3000}
