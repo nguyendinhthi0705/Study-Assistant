@@ -1,7 +1,9 @@
 import os
-from langchain.llms.bedrock import Bedrock
 import boto3, json
 from dotenv import load_dotenv
+from botocore.client import Config
+from langchain.llms.bedrock import Bedrock
+
 load_dotenv()
 
 def call_claude_sonet_stream(prompt):
@@ -97,3 +99,48 @@ def suggest_writing_document(input_text):
         <text>""" + str(input_text) + """</text>
     \n\nAssistant: """
     return call_claude_sonet_stream(prompt)
+
+def retrieveAndGenerate(
+    input: str,
+    kbId: str,
+    region: str = "us-east-1",
+    sessionId: str = None,
+    model_id: str = "anthropic.claude-v2:1",
+):
+    model_arn = f"arn:aws:bedrock:{region}::foundation-model/{model_id}"
+
+    bedrock_agent_client = boto3.client("bedrock-agent-runtime")
+
+    if sessionId:
+        return bedrock_agent_client.retrieve_and_generate(
+            input={"text": input},
+            retrieveAndGenerateConfiguration={
+                "type": "KNOWLEDGE_BASE",
+                "knowledgeBaseConfiguration": {
+                    "knowledgeBaseId": kbId,
+                    "modelArn": model_arn,
+                },
+            },
+            sessionId=sessionId,
+        )
+
+    else:
+        return bedrock_agent_client.retrieve_and_generate(
+            input={"text": input},
+            retrieveAndGenerateConfiguration={
+                "type": "KNOWLEDGE_BASE",
+                "knowledgeBaseConfiguration": {
+                    "knowledgeBaseId": kbId,
+                    "modelArn": model_arn,
+                },
+            },
+        )
+
+
+
+def search(input_text): 
+   response = retrieveAndGenerate(
+    input_text, "WUWMHISMII"
+)
+   print(response)
+   return response

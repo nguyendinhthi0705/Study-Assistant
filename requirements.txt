@@ -13,5 +13,5 @@ setuptools
 PyPDF2
 pypdf
 langchain_community
-google-search-results
 python-dotenv
+botocore
