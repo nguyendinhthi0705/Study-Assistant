@@ -3,6 +3,10 @@ import boto3, json
 from dotenv import load_dotenv
 from botocore.client import Config
 from langchain.llms.bedrock import Bedrock
+from langchain_community.retrievers import AmazonKnowledgeBasesRetriever
+from botocore.client import Config
+from langchain.chains import RetrievalQA
+from langchain_community.llms import Bedrock
 
 load_dotenv()
 
@@ -100,47 +104,16 @@ def suggest_writing_document(input_text):
     \n\nAssistant: """
     return call_claude_sonet_stream(prompt)
 
-def retrieveAndGenerate(
-    input: str,
-    kbId: str,
-    region: str = "us-east-1",
-    sessionId: str = None,
-    model_id: str = "anthropic.claude-v2:1",
-):
-    model_arn = f"arn:aws:bedrock:{region}::foundation-model/{model_id}"
-
-    bedrock_agent_client = boto3.client("bedrock-agent-runtime")
-
-    if sessionId:
-        return bedrock_agent_client.retrieve_and_generate(
-            input={"text": input},
-            retrieveAndGenerateConfiguration={
-                "type": "KNOWLEDGE_BASE",
-                "knowledgeBaseConfiguration": {
-                    "knowledgeBaseId": kbId,
-                    "modelArn": model_arn,
-                },
-            },
-            sessionId=sessionId,
-        )
-
-    else:
-        return bedrock_agent_client.retrieve_and_generate(
-            input={"text": input},
-            retrieveAndGenerateConfiguration={
-                "type": "KNOWLEDGE_BASE",
-                "knowledgeBaseConfiguration": {
-                    "knowledgeBaseId": kbId,
-                    "modelArn": model_arn,
-                },
-            },
-        )
-
-
-
 def search(input_text): 
-   response = retrieveAndGenerate(
-    input_text, "WUWMHISMII"
-)
-   print(response)
-   return response
+    retriever = AmazonKnowledgeBasesRetriever(
+        knowledge_base_id="WUWMHISMII",
+        retrieval_config={"vectorSearchConfiguration": {"numberOfResults": 4}}
+    )
+    model_kwargs_claude = {"temperature": 0, "top_k": 10, "max_tokens_to_sample": 3000}
+    llm = Bedrock(model_id="anthropic.claude-v2", model_kwargs=model_kwargs_claude)
+
+    qa = RetrievalQA.from_chain_type(
+        llm=llm, retriever=retriever, return_source_documents=True
+    )
+
+    return qa(input_text)
