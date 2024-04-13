@@ -1,12 +1,12 @@
 import os
 import boto3, json
 from dotenv import load_dotenv
-from botocore.client import Config
-from langchain.llms.bedrock import Bedrock
 from langchain_community.retrievers import AmazonKnowledgeBasesRetriever
-from botocore.client import Config
 from langchain.chains import RetrievalQA
-from langchain_community.llms import Bedrock
+from langchain_community.chat_models import BedrockChat
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.runnables import RunnablePassthrough
+from langchain_core.output_parsers import StrOutputParser
 
 load_dotenv()
 
@@ -14,7 +14,9 @@ def call_claude_sonet_stream(prompt):
 
     prompt_config = {
         "anthropic_version": "bedrock-2023-05-31",
-        "max_tokens": 4096,
+        "max_tokens": 2000,
+        "temperature": 0, 
+        "top_k": 0,
         "messages": [
             {
                 "role": "user",
@@ -104,16 +106,20 @@ def suggest_writing_document(input_text):
     \n\nAssistant: """
     return call_claude_sonet_stream(prompt)
 
-def search(input_text): 
+def search(question, callback): 
     retriever = AmazonKnowledgeBasesRetriever(
         knowledge_base_id="JAHBTIXPHK",
-        retrieval_config={"vectorSearchConfiguration": {"numberOfResults": 4}}
-    )
-    model_kwargs_claude = {"temperature": 0, "top_k": 10, "max_tokens_to_sample": 3000}
-    llm = Bedrock(model_id="anthropic.claude-v2", model_kwargs=model_kwargs_claude)
+        retrieval_config={"vectorSearchConfiguration": {"numberOfResults": 1}},
 
-    qa = RetrievalQA.from_chain_type(
+    )
+
+    model_kwargs_claude = {"max_tokens": 1000}
+    llm = BedrockChat(model_id="anthropic.claude-3-sonnet-20240229-v1:0"
+                      , model_kwargs=model_kwargs_claude
+                      , streaming=True
+                      , callbacks=[callback])
+
+    chain = RetrievalQA.from_chain_type(
         llm=llm, retriever=retriever, return_source_documents=True
     )
-
-    return qa(input_text)
+    return chain.invoke(question)
